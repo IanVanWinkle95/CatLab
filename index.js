@@ -1,14 +1,40 @@
 import * as Carousel from "./Carousel.js";
 import axios from "axios";
 
-async function initialLoad () {
-  const response = await fetch("https://cdn2.thecatapi.com/images/a94.jpg");
+const breeds = ["Golden Retriever", "Poodle", "Labrador Retriever", "German Shepherd"];
+const breedSelect = document.getElementById("breedSelect");
+const dog = document.getElementById("dog")
+
+breeds.forEach(breed => {
+  const option = document.createElement("option")
+  option.value = breed
+  option.text = breed
+  breedSelect.appendChild(option)
+
+})
+
+dog.addEventListener("click", getNewDog);
+
+async function initialLoad() {
+
+    const response = await fetch("https://dog.ceo/api/breeds/image/random");
     const jsonData = await response.json();
-    console.log(jsonData);
+    const url = jsonData.message;
+    console.log(url)
 }
 
+async function getNewDog() {
+  const response = await fetch("https://dog.ceo/api/breeds/image/random");
+  const jsonData = await response.json()
+  const url = jsonData.message
+  console.log(url)
+}
+
+initialLoad()
+
 // The breed selection input element.
-const breedSelect = document.getElementById("breedSelect");
+// const breedSelect = document.getElementById("breedSelect");
+
 // The information section div element.
 const infoDump = document.getElementById("infoDump");
 // The progress bar div element.
